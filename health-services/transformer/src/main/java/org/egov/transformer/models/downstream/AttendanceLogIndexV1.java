@@ -17,4 +17,14 @@ import org.egov.transformer.models.attendance.AttendanceLog;
 public class AttendanceLogIndexV1 {
     @JsonProperty("attendanceLog")
     private AttendanceLog attendanceLog;
+
+    @JsonProperty("firstName")
+    private String firstName = null;
+
+    @JsonProperty("lastName")
+    private String lastName = null;
+
+    @JsonProperty("convertedTimestamp")
+    private String convertedTimestamp = null;
+
 }

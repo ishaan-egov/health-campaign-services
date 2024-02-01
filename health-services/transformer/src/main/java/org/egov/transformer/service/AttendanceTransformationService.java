@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.extern.slf4j.Slf4j;
 import org.egov.common.models.facility.Facility;
+import org.egov.common.models.individual.Name;
 import org.egov.common.models.project.Project;
 import org.egov.common.models.project.ProjectBeneficiary;
 import org.egov.common.models.referralmanagement.Referral;
@@ -61,8 +62,13 @@ public class AttendanceTransformationService {
     }
 
     public AttendanceLogIndexV1 transform(AttendanceLog attendanceLog) {
+        Map<String, Object> individualDetails = individualService.findIndividualByClientReferenceId(attendanceLog.getIndividualId(), attendanceLog.getTenantId());
+        Name name = (Name) individualDetails.get(NAME);
         AttendanceLogIndexV1 attendanceLogIndexV1 = AttendanceLogIndexV1.builder()
                 .attendanceLog(attendanceLog)
+                .firstName(name.getGivenName())
+                .lastName(name.getFamilyName())
+                .convertedTimestamp(commonUtils.getTimeStampFromEpoch(attendanceLog.getTime().longValue()))
                 .build();
         return attendanceLogIndexV1;
     }

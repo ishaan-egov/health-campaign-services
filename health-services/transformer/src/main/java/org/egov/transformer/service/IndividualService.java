@@ -46,6 +46,7 @@ public class IndividualService {
         IndividualBulkResponse response;
 
         Map<String, Object> individualDetails = new HashMap<>();
+        individualDetails.put(NAME, null);
         individualDetails.put(AGE, null);
         individualDetails.put(GENDER, null);
         individualDetails.put(DATE_OF_BIRTH, null);
@@ -61,6 +62,7 @@ public class IndividualService {
                     IndividualBulkResponse.class);
             Individual individual = response.getIndividual().get(0);
 
+            individualDetails.put(NAME, individual.getName());
             individualDetails.put(AGE, commonUtils.calculateAgeInMonthsFromDOB(individual.getDateOfBirth()));
             individualDetails.put(GENDER, individual.getGender().toString());
             individualDetails.put(INDIVIDUAL_ID, clientReferenceId);
